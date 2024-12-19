@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ContactForm from '../components/ContactForm.astro';
 ---
-
 
 <style>
 	h1 {
@@ -13,39 +13,17 @@ import Layout from '../layouts/Layout.astro';
 	<main class="min-h-screen max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
 		<div class="flex flex-col lg:flex-row justify-between items-start gap-12 w-full">
 			<!-- Logo and Subtitle Section -->
-			<div class="flex flex-col gap-5">
-				<h1 class="text-[#f8f5f5] text-5xl sm:text-6xl lg:text-8xl font-medium font-['Funnel Display'] tracking-wide">
-					codestube;
-				</h1>
-				<p class="text-white text-xl sm:text-2xl font-medium font-['Outfit'] tracking-tight">
-					In Entwicklung
-				</p>
+			<div class="flex flex-col gap-5 lg:my-auto">
+					<h1 class="text-[#f8f5f5] text-5xl sm:text-6xl lg:text-8xl font-medium font-['Funnel Display'] tracking-wide">
+						codestube;
+					</h1>
+					<p class="text-white text-xl sm:text-2xl font-medium font-['Outfit'] tracking-tight">
+						In Entwicklung
+					</p>
 			</div>
 
 			<!-- Contact Form Section -->
-			<div class="w-full lg:w-[500px] flex flex-col gap-5">
-				<h2 class="text-white text-xl sm:text-2xl font-medium font-['Outfit'] tracking-tight">
-					Kontaktiere uns
-				</h2>
-				<form class="flex flex-col gap-3 w-full">
-					<input 
-						type="email"
-						placeholder="deine@email.com"
-						class="w-full p-5 rounded-xl border border-[#f8f5f5] bg-transparent text-white text-base font-medium font-['Outfit'] tracking-tight placeholder-white"
-					/>
-					<textarea 
-						placeholder="Deine Nachricht..."
-						rows="8"
-						class="w-full p-5 rounded-xl border border-[#f8f5f5] bg-transparent text-white text-base font-medium font-['Outfit'] tracking-tight placeholder-white resize-none"
-					></textarea>
-					<button 
-						type="submit"
-						class="w-[150px] p-5 bg-[#f8f5f5] rounded-xl text-[#191919] text-base font-medium font-['Outfit'] tracking-tight hover:bg-white transition-colors self-end"
-					>
-						Absenden
-					</button>
-				</form>
-			</div>
+			<ContactForm />
 		</div>
 	</main>
 </Layout>

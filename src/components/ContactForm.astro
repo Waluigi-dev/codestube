@@ -1,0 +1,99 @@
+---
+// ContactForm.astro
+---
+
+<div class="w-full lg:w-[500px] flex flex-col gap-5">
+  <h2 class="text-white text-xl sm:text-2xl font-medium font-['Outfit'] tracking-tight">
+    Kontaktiere uns
+  </h2>
+  <form id="contact-form" class="flex flex-col gap-3 w-full">
+    <input
+      type="email"
+      id="email"
+      name="email"
+      required
+      placeholder="deine@email.com"
+      class="w-full p-5 rounded-xl border border-[#f8f5f5] bg-transparent text-white text-base font-medium font-['Outfit'] tracking-tight placeholder-white"
+    />
+    <textarea
+      id="message"
+      name="message"
+      rows="8"
+      required
+      placeholder="Deine Nachricht..."
+      class="w-full p-5 rounded-xl border border-[#f8f5f5] bg-transparent text-white text-base font-medium font-['Outfit'] tracking-tight placeholder-white resize-none"
+    ></textarea>
+
+    <!-- Turnstile widget will be inserted here when needed -->
+    <!-- <div id="turnstile-widget"></div> -->
+
+    <button
+      type="submit"
+      class="w-[150px] p-5 bg-[#f8f5f5] rounded-xl text-[#191919] text-base font-medium font-['Outfit'] tracking-tight hover:bg-white transition-colors self-end"
+    >
+      Absenden
+    </button>
+
+    <div id="form-status" class="hidden text-white"></div>
+  </form>
+</div>
+
+<script>
+  // Commenting out Turnstile for now
+  // declare const turnstile: any;
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('contact-form') as HTMLFormElement;
+    const statusDiv = document.getElementById('form-status');
+
+    // Turnstile initialization - commented out for now
+    /*
+    turnstile.render('#turnstile-widget', {
+      sitekey: import.meta.env.PUBLIC_TURNSTILE_SITE_KEY,
+      callback: function(token: string) {
+        const tokenInput = document.createElement('input');
+        tokenInput.type = 'hidden';
+        tokenInput.name = 'token';
+        tokenInput.value = token;
+        form.appendChild(tokenInput);
+      },
+    });
+    */
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      try {
+        const formData = new FormData(form);
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(Object.fromEntries(formData)),
+        });
+
+        const data = await response.json();
+        
+        if (statusDiv) {
+          statusDiv.textContent = data.message;
+          statusDiv.className = response.ok 
+            ? 'text-green-400 mt-3' 
+            : 'text-red-400 mt-3';
+          statusDiv.classList.remove('hidden');
+        }
+
+        if (response.ok) {
+          form.reset();
+          // turnstile.reset();  // Commented out for now
+        }
+      } catch (error) {
+        if (statusDiv) {
+          statusDiv.textContent = 'Ein Fehler ist aufgetreten. Bitte versuche es erneut.';
+          statusDiv.className = 'text-red-400 mt-3';
+          statusDiv.classList.remove('hidden');
+        }
+      }
+    });
+  });
+</script>
